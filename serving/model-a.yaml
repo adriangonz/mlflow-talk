@@ -1,0 +1,16 @@
+---
+apiVersion: machinelearning.seldon.io/v1alpha2
+kind: SeldonDeployment
+metadata:
+  name: model-a
+spec:
+  name: model-a
+  predictors:
+  - graph:
+      children: []
+      implementation: MLFLOW_SERVER
+      modelUri: gs://seldon-models/mlflow/model-a
+      name: wines-classifier
+    name: wines-classifier
+    replicas: 1
+
