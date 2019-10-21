@@ -2,7 +2,8 @@
 
 End to end example integrating MLFlow and Seldon, with A/B testing between two
 models.
-We also cover how to explain the model's predictions with Alibi.
+
+The slides accompanying this demo can be [found here](https://docs.google.com/presentation/d/12UKDkyt3lLvdcYf8v5H3fzd1_78X3w61hByAsAhNOC4/edit?usp=sharing).
 
 ## Set up and requirements
 
