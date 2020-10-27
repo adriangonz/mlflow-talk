@@ -4,7 +4,8 @@ kind: SeldonDeployment
 metadata:
   name: wines-classifier
 spec:
-  name: wines-classifier
+  annotations:
+    seldon.io/executor: "false" 
   predictors:
   - graph:
       children: []
@@ -14,6 +15,30 @@ spec:
     name: model-a
     replicas: 1
     traffic: 50
+    componentSpecs:
+    - spec:
+        # We are setting high failureThreshold as installing conda dependencies
+        # can take long time and we want to avoid k8s killing the container prematurely
+        containers:
+        - name: wines-classifier
+          livenessProbe:
+            initialDelaySeconds: 60
+            failureThreshold: 100
+            periodSeconds: 5
+            successThreshold: 1
+            httpGet:
+              path: /health/ping
+              port: http
+              scheme: HTTP
+          readinessProbe:
+            initialDelaySeconds: 60
+            failureThreshold: 100
+            periodSeconds: 5
+            successThreshold: 1
+            httpGet:
+              path: /health/ping
+              port: http
+              scheme: HTTP
   - graph:
       children: []
       implementation: MLFLOW_SERVER
@@ -22,3 +47,27 @@ spec:
     name: model-b
     replicas: 1
     traffic: 50
+    componentSpecs:
+    - spec:
+        # We are setting high failureThreshold as installing conda dependencies
+        # can take long time and we want to avoid k8s killing the container prematurely
+        containers:
+        - name: wines-classifier
+          livenessProbe:
+            initialDelaySeconds: 60
+            failureThreshold: 100
+            periodSeconds: 5
+            successThreshold: 1
+            httpGet:
+              path: /health/ping
+              port: http
+              scheme: HTTP
+          readinessProbe:
+            initialDelaySeconds: 60
+            failureThreshold: 100
+            periodSeconds: 5
+            successThreshold: 1
+            httpGet:
+              path: /health/ping
+              port: http
+              scheme: HTTP
